@@ -13,7 +13,7 @@ import Footer from "../components/Footer";
 import Badge from "@mui/material/Badge";
 import { useKeenSlider } from "keen-slider/react";
 import classnames from "classnames";
-import "keen-slider/keen-slider.min.css"; // Import keen-slider CSS
+import "keen-slider/keen-slider.min.css";
 
 const products = [
   {
@@ -36,22 +36,14 @@ const products = [
     price: "$25.32",
     image: "/images/banners/4.jpg",
   },
-  {
-    name: "Elegant Brochure",
-    price: "$11.68",
-    image: "/images/banners/5.jpg",
-  },
-  {
-    name: "Creative Banner",
-    price: "$45.28",
-    image: "/images/banners/6.jpg",
-  },
+  { name: "Elegant Brochure", price: "$11.68", image: "/images/banners/5.jpg" },
+  { name: "Creative Banner", price: "$45.28", image: "/images/banners/6.jpg" },
 ];
 
 const Designs = () => {
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [isClient, setIsClient] = useState<boolean>(false); // Track if it's client-side
+  const [loaded, setLoaded] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isClient, setIsClient] = useState(false);
 
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     slideChanged(slider) {
@@ -59,14 +51,13 @@ const Designs = () => {
     },
   });
 
-  // Ensure the component is client-side
   useEffect(() => {
     setIsClient(true);
     setLoaded(true);
   }, []);
 
   if (!isClient) {
-    return null; // Prevent rendering before it's client-side
+    return null;
   }
 
   return (
@@ -78,72 +69,28 @@ const Designs = () => {
         </Typography>
 
         {/* Slider Section */}
-        <Box className="swiper" sx={{ position: "relative" }}>
+        <Box
+          className="swiper"
+          sx={{ position: "relative", marginBottom: "50px" }}
+        >
           <div className="navigation-wrapper">
             <div ref={sliderRef} className="keen-slider">
-              {/* Slider Images with Border Radius */}
-              <div className="keen-slider__slide">
-                <img
-                  src="/images/banners/1.jpg"
-                  alt="swiper 1"
-                  style={{
-                    width: "100%",
-                    maxHeight: "500px",
-                    objectFit: "cover",
-                    borderRadius: "15px", // Border radius added
-                  }}
-                />
-              </div>
-              <div className="keen-slider__slide">
-                <img
-                  src="/images/banners/2.jpg"
-                  alt="swiper 2"
-                  style={{
-                    width: "100%",
-                    maxHeight: "500px",
-                    objectFit: "cover",
-                    borderRadius: "15px", // Border radius added
-                  }}
-                />
-              </div>
-              <div className="keen-slider__slide">
-                <img
-                  src="/images/banners/3.jpg"
-                  alt="swiper 3"
-                  style={{
-                    width: "100%",
-                    maxHeight: "500px",
-                    objectFit: "cover",
-                    borderRadius: "15px", // Border radius added
-                  }}
-                />
-              </div>
-              <div className="keen-slider__slide">
-                <img
-                  src="/images/banners/4.jpg"
-                  alt="swiper 4"
-                  style={{
-                    width: "100%",
-                    maxHeight: "500px",
-                    objectFit: "cover",
-                    borderRadius: "15px", // Border radius added
-                  }}
-                />
-              </div>
-              <div className="keen-slider__slide">
-                <img
-                  src="/images/banners/5.jpg"
-                  alt="swiper 5"
-                  style={{
-                    width: "100%",
-                    maxHeight: "500px",
-                    objectFit: "cover",
-                    borderRadius: "15px", // Border radius added
-                  }}
-                />
-              </div>
+              {products.map((product, index) => (
+                <div key={index} className="keen-slider__slide">
+                  <img
+                    src={product.image}
+                    alt={`slider ${index + 1}`}
+                    className="slider-image"
+                    style={{
+                      width: "100%",
+                      height: "500px", // Fixed height for all images
+                      objectFit: "cover", // Ensure the image maintains aspect ratio
+                      borderRadius: "15px",
+                    }}
+                  />
+                </div>
+              ))}
             </div>
-            {/* Custom Navigation Arrows */}
             {loaded && instanceRef.current && (
               <>
                 <Button
@@ -159,7 +106,6 @@ const Designs = () => {
                 >
                   Prev
                 </Button>
-
                 <Button
                   sx={{
                     position: "absolute",
@@ -184,21 +130,17 @@ const Designs = () => {
                 ...Array(
                   instanceRef.current.track.details.slides.length
                 ).keys(),
-              ].map((idx) => {
-                return (
-                  <Badge
-                    key={idx}
-                    variant="dot"
-                    component="div"
-                    className={classnames({
-                      active: currentSlide === idx,
-                    })}
-                    onClick={() => {
-                      instanceRef.current?.moveToIdx(idx);
-                    }}
-                  ></Badge>
-                );
-              })}
+              ].map((idx) => (
+                <Badge
+                  key={idx}
+                  variant="dot"
+                  component="div"
+                  className={classnames({ active: currentSlide === idx })}
+                  onClick={() => {
+                    instanceRef.current?.moveToIdx(idx);
+                  }}
+                ></Badge>
+              ))}
             </div>
           )}
         </Box>
@@ -209,23 +151,22 @@ const Designs = () => {
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Card>
                 <CardContent>
-                  {/* Product Image */}
                   <Box
                     sx={{
                       width: "100%",
-                      height: "200px", // Set image height
+                      height: "200px", // Fixed height for cards
                       overflow: "hidden",
-                      borderRadius: "15px", // Border radius added
+                      borderRadius: "15px",
                       marginBottom: 2,
                     }}
                   >
                     <img
-                      src={product.image} // Use product.image from the array
+                      src={product.image}
                       alt={product.name}
                       style={{
                         width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
+                        height: "100%", // Fixed height for card images
+                        objectFit: "cover", // Ensure image maintains aspect ratio
                       }}
                     />
                   </Box>
