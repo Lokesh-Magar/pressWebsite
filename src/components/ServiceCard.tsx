@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Box } from "@mui/material";
+import { Card, Typography, Box } from "@mui/material";
 import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined";
 import ColorLensOutlinedIcon from "@mui/icons-material/ColorLensOutlined";
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined";
