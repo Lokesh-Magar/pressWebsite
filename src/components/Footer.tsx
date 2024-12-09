@@ -32,7 +32,7 @@ const Footer = () => {
       <Box
         sx={{
           marginTop: "-3%",
-          marginLeft: "80%",
+          marginLeft: "85%",
           justifyContent: "center",
           color: "white",
         }}
