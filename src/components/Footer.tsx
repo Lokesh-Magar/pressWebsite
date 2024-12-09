@@ -9,54 +9,47 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        padding: { xs: "15px", sm: "20px" },
+        padding: "20px",
         backgroundColor: "black",
-        textAlign: "center", // Default center alignment for larger screens
       }}
     >
-      {/* Title and Subtitle: Align left on smaller screens */}
-      <Box
+      {/* Company name */}
+      <Typography
+        variant="h4"
+        gutterBottom
         sx={{
-          display: { xs: "flex", sm: "block" }, // Flex on small screens, block on larger screens
-          flexDirection: "column",
-          alignItems: { xs: "flex-start", sm: "center" }, // Align to the left on small screens, center on larger ones
-          marginTop: { xs: "10px", sm: "0" }, // Adjust top margin for small screens
+          fontWeight: "bold",
+          color: "white",
+          fontSize: { xs: "1.8rem", sm: "2.5rem" }, // Reduced font size on small screens
+          marginBottom: { xs: "5px", sm: "20px" }, // Reduce bottom margin for small screens
         }}
       >
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "white",
-            fontSize: { xs: "1.5rem", sm: "2rem" }, // Smaller font size on small screens
-          }}
-        >
-          PrintPress Co.
-        </Typography>
+        PrintPress Co.
+      </Typography>
 
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{
-            fontWeight: "normal",
-            color: "white",
-            marginTop: "-10px",
-            fontSize: { xs: "0.9rem", sm: "1.25rem" }, // Smaller font size for smaller screens
-          }}
-        >
-          Your one-stop shop for printing and pressing needs
-        </Typography>
-      </Box>
+      {/* Tagline */}
+      <Typography
+        variant="h6"
+        gutterBottom
+        sx={{
+          fontWeight: "normal",
+          color: "white",
+          fontSize: { xs: "1rem", sm: "1.2rem" }, // Reduced font size on small screens
+          marginTop: { xs: "0px", sm: "-10px" }, // Adjust top margin for small screens
+          marginBottom: { xs: "5px", sm: "20px" }, // Reduce space below the tagline
+        }}
+      >
+        Your one-stop shop for printing and pressing needs
+      </Typography>
 
-      {/* Social Media Icons */}
+      {/* Social media buttons */}
       <Box
         sx={{
-          marginTop: "10px",
+          marginTop: { xs: "5px", sm: "-3%" }, // Reduce gap for small screens
           display: "flex",
-          justifyContent: "center",
+          justifyContent: { xs: "center", sm: "flex-start" }, // Center buttons on small screens
+          marginLeft: { sm: "85%" }, // Keep default alignment for large screens
           gap: 2,
-          flexWrap: "wrap", // Stack icons on small screens
         }}
       >
         <IconButton>
@@ -73,13 +66,15 @@ const Footer = () => {
         </IconButton>
       </Box>
 
-      {/* Copyright Text */}
+      {/* Copyright text */}
       <Typography
         variant="caption"
         sx={{
           color: "white",
           fontWeight: "bold",
-          fontSize: { xs: "0.8rem", sm: "1rem" }, // Smaller font size on small screens
+          textAlign: "center",
+          display: "block",
+          fontSize: "1rem",
           marginTop: "10px",
         }}
       >
