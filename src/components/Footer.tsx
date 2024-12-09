@@ -9,32 +9,54 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        padding: "20px",
+        padding: { xs: "15px", sm: "20px" },
         backgroundColor: "black",
+        textAlign: "center", // Default center alignment for larger screens
       }}
     >
-      <Typography
-        variant="h4"
-        gutterBottom
-        style={{ fontWeight: "bold", color: "white" }}
-      >
-        PrintPress Co.
-      </Typography>
-
-      <Typography
-        variant="h6"
-        gutterBottom
-        style={{ fontWeight: "normal", color: "white", marginTop: "-10px" }}
-      >
-        Your one-stop shop for printing and pressing needs
-      </Typography>
-
+      {/* Title and Subtitle: Align left on smaller screens */}
       <Box
         sx={{
-          marginTop: "-3%",
-          marginLeft: "85%",
+          display: { xs: "flex", sm: "block" }, // Flex on small screens, block on larger screens
+          flexDirection: "column",
+          alignItems: { xs: "flex-start", sm: "center" }, // Align to the left on small screens, center on larger ones
+          marginTop: { xs: "10px", sm: "0" }, // Adjust top margin for small screens
+        }}
+      >
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            fontWeight: "bold",
+            color: "white",
+            fontSize: { xs: "1.5rem", sm: "2rem" }, // Smaller font size on small screens
+          }}
+        >
+          PrintPress Co.
+        </Typography>
+
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{
+            fontWeight: "normal",
+            color: "white",
+            marginTop: "-10px",
+            fontSize: { xs: "0.9rem", sm: "1.25rem" }, // Smaller font size for smaller screens
+          }}
+        >
+          Your one-stop shop for printing and pressing needs
+        </Typography>
+      </Box>
+
+      {/* Social Media Icons */}
+      <Box
+        sx={{
+          marginTop: "10px",
+          display: "flex",
           justifyContent: "center",
-          color: "white",
+          gap: 2,
+          flexWrap: "wrap", // Stack icons on small screens
         }}
       >
         <IconButton>
@@ -51,14 +73,14 @@ const Footer = () => {
         </IconButton>
       </Box>
 
+      {/* Copyright Text */}
       <Typography
         variant="caption"
-        style={{
+        sx={{
           color: "white",
           fontWeight: "bold",
-          textAlign: "center",
-          display: "block",
-          fontSize: "1rem",
+          fontSize: { xs: "0.8rem", sm: "1rem" }, // Smaller font size on small screens
+          marginTop: "10px",
         }}
       >
         © 2023 PrintPress Co. All rights reserved.

@@ -12,10 +12,14 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import Link from "next/link"; // Import Next.js Link
+import MenuIcon from "@mui/icons-material/Menu";
 
 type ThemeMode = "light" | "dark" | "system";
 
@@ -26,8 +30,8 @@ const Header: React.FC = () => {
   const [currentPaletteMode, setCurrentPaletteMode] = useState<
     "light" | "dark"
   >("light");
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Detect system theme
   const getSystemTheme = () => {
     const prefersDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)"
@@ -36,14 +40,12 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    // Update palette mode based on themeMode
     if (themeMode === "system") {
       setCurrentPaletteMode(getSystemTheme());
     } else {
       setCurrentPaletteMode(themeMode);
     }
 
-    // Listen for system theme changes
     const handleSystemThemeChange = (e: MediaQueryListEvent) => {
       if (themeMode === "system") {
         setCurrentPaletteMode(e.matches ? "dark" : "light");
@@ -64,7 +66,7 @@ const Header: React.FC = () => {
 
   const theme = createTheme({
     palette: {
-      mode: currentPaletteMode, // Only "light" or "dark" is allowed here
+      mode: currentPaletteMode,
     },
   });
 
@@ -79,6 +81,10 @@ const Header: React.FC = () => {
   const handleThemeChange = (mode: ThemeMode) => {
     setThemeMode(mode);
     handleMenuClose();
+  };
+
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
   };
 
   if (!isClient) {
@@ -97,34 +103,54 @@ const Header: React.FC = () => {
           borderBottom: "1px solid #ddd",
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-between" }}>
+        <Toolbar
+          sx={{
+            justifyContent: "space-between",
+            padding: { xs: "8px 16px", sm: "16px" },
+          }}
+        >
           <Typography
             variant="h5"
-            sx={{ fontWeight: "bold", fontSize: "3rem" }}
+            sx={{ fontWeight: "bold", fontSize: { xs: "2rem", sm: "3rem" } }}
           >
             PrintPress
           </Typography>
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Link href="/" passHref>
-              <Button color="inherit" style={{ fontWeight: "bolder" }}>
-                Home
-              </Button>
-            </Link>
-            <Link href="/designs" passHref>
-              <Button color="inherit" style={{ fontWeight: "bolder" }}>
-                Designs
-              </Button>
-            </Link>
-            <Link href="/reviews" passHref>
-              <Button color="inherit" style={{ fontWeight: "bolder" }}>
-                Review
-              </Button>
-            </Link>
-            <Link href="/contact" passHref>
-              <Button color="inherit" style={{ fontWeight: "bolder" }}>
-                Contact
-              </Button>
-            </Link>
+
+          {/* Hamburger Icon for Small Screens */}
+          <Box sx={{ display: { xs: "flex", sm: "none" } }}>
+            <IconButton onClick={handleDrawerToggle} color="inherit">
+              <MenuIcon />
+            </IconButton>
+          </Box>
+
+          {/* Menu Items for Large Screens */}
+          <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 2 }}>
+            <Button href="/" color="inherit" sx={{ fontWeight: "bolder" }}>
+              Home
+            </Button>
+            <Button
+              href="/designs"
+              color="inherit"
+              sx={{ fontWeight: "bolder" }}
+            >
+              Designs
+            </Button>
+            <Button
+              href="/reviews"
+              color="inherit"
+              sx={{ fontWeight: "bolder" }}
+            >
+              Review
+            </Button>
+            <Button
+              href="/contact"
+              color="inherit"
+              sx={{ fontWeight: "bolder" }}
+            >
+              Contact
+            </Button>
+
+            {/* Theme Toggle Button */}
             <IconButton onClick={handleMenuClick} color="inherit">
               {currentPaletteMode === "light" ? (
                 <LightModeOutlinedIcon />
@@ -150,6 +176,31 @@ const Header: React.FC = () => {
           </Box>
         </Toolbar>
       </AppBar>
+
+      {/* Drawer for Small Screens */}
+      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
+        <List sx={{ width: 250 }}>
+          <ListItem component="a" href="/" onClick={handleDrawerToggle}>
+            <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem component="a" href="/designs" onClick={handleDrawerToggle}>
+            <ListItemText primary="Designs" />
+          </ListItem>
+          <ListItem component="a" href="/reviews" onClick={handleDrawerToggle}>
+            <ListItemText primary="Review" />
+          </ListItem>
+          <ListItem component="a" href="/contact" onClick={handleDrawerToggle}>
+            <ListItemText primary="Contact" />
+          </ListItem>
+          <ListItem
+            component="a"
+            onClick={handleMenuClick}
+            style={{ cursor: "pointer" }}
+          >
+            <ListItemText primary="Theme" />
+          </ListItem>
+        </List>
+      </Drawer>
     </ThemeProvider>
   );
 };
